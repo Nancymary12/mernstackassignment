@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simplenav</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="2xl:container mx-auto">
+        <div class=" w-[80%] lg:w-[65%] mx-auto grid grid-cols-1 md:grid-cols-2">
+            <!--container1-->
+            <div class=" flex justify-between items-center">
+                    
+                    <img class="h-[80px] w-[80px]"src="https://ik.imagekit.io/f6tmqo1ku/food%20store/logo%20and%20bg/food-munch-img.png?updatedAt=1754130630732" alt="logo">
+                    
+                    <div>
+                    <svg id="menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu md:hidden"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+                    <svg id="cross" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x hidden"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </div>
+                </div>
+            <!--container1 end-->
+
+            <!--container2 start-->
+                <div id="navitems" class="hidden md:block py-4">
+                    <ul class="flex flex-col gap-2 md:gap-6 items-end justify-end md:flex-row">
+                    <li class="text-[18px] font-medium">Home</li>
+                    <li class="text-[18px] font-medium">About</li>
+                    <li class="text-[18px] font-medium">project</li>
+                    <li class="text-[18px] font-medium">Resume</li>
+                    <li class="text-[18px] font-medium">Contact</li>
+                </ul>
+                </div>
+            <!--container2 end-->
+                
+            </div>
+
+
+        </div>
+
+        <script>
+         var navitems=document.getElementById("navitems");
+         var cross=document.getElementById("cross");
+         var menu=document.getElementById("menu");
+
+         menu.addEventListener("click",()=>{
+            menu.classList.add("hidden");
+            cross.classList.remove("hidden");
+            navitems.classList.remove("hidden");
+         })
+         cross.addEventListener("click",()=>{
+            menu.classList.remove("hidden");
+            cross.classList.add("hidden");
+            navitems.classList.add("hidden");
+         })
+
+    </script>
+
+    
+</body>
+</html>

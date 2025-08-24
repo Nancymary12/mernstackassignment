@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>updatepro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="2xl:container mx-auto">
+        <div class="w-[90%] mx-auto flex items-center justify-center h-screen">
+              <div class="border rounded-lg p-5 shadow-xl bg-gradient-to-b from-pink-400 to-purple-500">
+                
+                <form id="form" class="flex flex-col gap-8">
+                    <h1 class="text-[32px] text-center font-bold text-white"> Update Password</h1>
+                    <div class="flex flex-col gap-2">
+                       <label class="text-sm font-medium text-white">NEW PASSWORD</label>
+                       <input id="pass" type="password" class="text-sm rounded-lg border border-black py-3 pl-3" placeholder="Create new password">
+                       <p id="passempty" class=" text-red-700 text-[18px] font-bold"></p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-white">CONFRIM PASSWORD</label>
+                        <input id="newpass" type="password" class="text-sm rounded-lg border border-black py-3 pl-3" placeholder="Confrim password">
+                        <p id="samepasserror" class="text-red-700 text-[18px] font-bold"></p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button class="py-3 px-5 rounded-lg bg-blue-500 text-white font-medium">Update</button>
+                    </div>
+                </form>
+              </div>
+        </div>
+
+    </div>
+
+    <script>
+        var isvalid=false;
+        var form=document.getElementById("form");
+        var pass=document.getElementById("pass");
+        var newpass=document.getElementById("newpass");
+        var passempty=document.getElementById("passempty");
+        var samepasserror=document.getElementById("samepasserror");
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            advanceValidation(pass.value,newpass.value);
+            console.log("submited");
+
+            if(isvalid===true){
+            alert("password updated successfully");
+            form.reset();
+        }
+            
+        })
+
+        pass.addEventListener("input",(e)=>{
+            if(!(e.target.value==="")){
+                passempty.textContent="";
+            }
+        })
+
+        newpass.addEventListener("input",(e)=>{
+            if(!(e.target.value==="")){
+                samepasserror.textContent="";
+            }
+        })
+
+        const advanceValidation=(pass,newpass)=>{
+            const passRegex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            if(pass===""){
+                passempty.textContent="Required *";
+            }else if(pass.match(passRegex)){
+                passempty.textContent="";
+                isvalid=true;
+            }else{
+                passempty.textContent="provide strong password";
+            }
+
+            if(newpass===""){
+                samepasserror.textContent="Required *";
+                isvalid=false;
+                console.log("required");
+            }else if(!(pass===newpass)){
+                samepasserror.textContent="password must be same";
+                console.log("not same");
+                isvalid=false;
+            }else{
+                samepasserror.textContent="";
+                isvalid=true;
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>

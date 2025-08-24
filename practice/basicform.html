@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--FireBase SDK-->
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="2xl:container mx-auto ">
+        <div class="w-[90%] mx-auto flex items-center justify-center h-screen">
+            <div class="flex flex-col gap-5 items-center border rounded-lg py-6 px-4 bg-gray-500/10">
+                <h1 class="text-[28px] font-bold bg-green-500 w-[100%] text-center rounded-lg shadow-xl">LOGIN</h1>
+          <form id="form" class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+                <label for="email">Email:</label>
+            <input type="text" name="email" id="email" class="py-2 pr-16 pl-3 border border-black rounded-lg " placeholder="Enter your email"></input>
+            <p id="emailerror" class="text-sm text-red-500"></p>
+            </div>
+            
+            <div class="flex flex-col gap-2">
+               <label for="password">Password:</label>
+            <input  type="text" name="pass" id="pass" class=" py-2 pr-16 pl-3 border border-black rounded-lg" placeholder="Enter your password"></input>
+            <p id="passerror" class="text-sm text-red-500"> </p>
+            </div>
+            
+            <div>
+                <button  class="text-white bg-green-500 rounded-lg shadow-lg py-2 px-3 hover:bg-white hover:text-green-500 hover:border hover:border-green-500">Submit</button>
+            </div>
+          </form>
+            </div>
+          
+
+        </div>
+
+    </div>
+
+    <script>
+        var form=document.getElementById("form");
+        var email=document.getElementById("email");
+        var pass=document.getElementById("pass");
+        var passerror=document.getElementById("passerror");
+        var emailerror=document.getElementById("emailerror");
+        
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            const valid=advancevalidation(email.value,pass.value);
+            if(valid){
+                saveData(email.value,pass.value);
+                console.log("data stored in DB");
+            }else{
+                console.log("data is not stored in DB");
+            }
+
+            
+        });
+        
+        const saveData=(email,pass)=>{
+
+            const firebaseConfig = {
+        apiKey: "AIzaSyDsI59iDJj1Q77R-03ay-m4BR7WMMZipAs",
+        authDomain: "loginpage-965cc.firebaseapp.com",
+        databaseURL: "https://loginpage-965cc-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "loginpage-965cc",
+        storageBucket: "loginpage-965cc.firebasestorage.app",
+        messagingSenderId: "29366901092",
+        appId: "1:29366901092:web:713b2fc824665025ca0271"
+        };  
+
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.database().ref("ReqForm");
+
+         db.push({
+             email: email,
+             password: pass,
+        });
+
+        }
+        
+
+        email.addEventListener("input",(e)=>{
+            const emailRegex=/^\S+@\S+\.\S+$/;
+            if(e.target.value==""){
+                emailerror.textContent="required field";
+            }else if(!e.target.value.match(emailRegex)){
+                emailerror.textContent="please provide valid email";
+            }else{
+                emailerror.textContent="";
+            }
+        })
+
+        pass.addEventListener("input",(e)=>{
+            const charRegex=/^(?=.*[^A-Za-z0-9\s]).+$/;
+            const passRegex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            if(e.target.value===""){
+                passerror.textContent="Required";
+            }else if(!e.target.value.match(charRegex)){
+               passerror.textContent="provide atleast one special character";
+            }else if(!e.target.value.match(passRegex)){
+                passerror.textContent="please provide in the format Coding@123";
+            }else{
+                passerror.textContent="";
+            }
+        })
+       
+        const advancevalidation=(email,pass)=>{
+            var isvalid=true;
+            let boolean=false;
+            const emailRegex=/^\S+@\S+\.\S+$/;
+            if(email.match(emailRegex)){
+                emailerror.textContent="";
+                boolean=true;
+            }else{
+                emailerror.textContent="Invaild email format";
+                isvalid=false;
+            }
+
+            const passRegex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            
+            if(pass.match(passRegex)){
+                passerror.textContent="";
+                boolean=true;
+            }else{
+                passerror.textContent="Invalid password format";
+                isvalid=false
+                boolean=false;
+            }
+            
+
+            if(boolean==true){
+                alert("loggin Successfull");
+                
+            }
+
+            return isvalid;
+        };
+
+
+
+    </script>
+</body>
+</html>
+
